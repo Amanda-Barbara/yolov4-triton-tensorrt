@@ -1,4 +1,4 @@
-# YOLOv4 on Triton Inference Server with TensorRT
+# YOLOv4 on Triton Inference Server with TensorRT lib
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/Isarsoft/yolov4-triton-tensorrt?include_prereleases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
