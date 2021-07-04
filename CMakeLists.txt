@@ -1,19 +1,33 @@
 cmake_minimum_required(VERSION 3.5)
 
-PROJECT(yolov4-triton-tensorrt VERSION 1.1.0 LANGUAGES CXX)
+PROJECT(HyInferenceServer VERSION 1.1.0 LANGUAGES CXX)
 
 # CUDA
 find_package(CUDA REQUIRED)
 set(CUDA_NVCC_PLAGS ${CUDA_NVCC_PLAGS};-std=c++11;-g;-G;-gencode;arch=compute_75;code=sm_75)
-if (CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
-    message("embed_platform on")
-    include_directories(/usr/local/cuda/targets/aarch64-linux/include)
-    link_directories(/usr/local/cuda/targets/aarch64-linux/lib)
-else()
-    message("embed_platform off")
-    include_directories(/usr/local/cuda/include)
-    link_directories(/usr/local/cuda/lib64)
-endif()
+#if (CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+#    message("embed_platform on")
+#    include_directories(/usr/local/cuda/targets/aarch64-linux/include)
+#    link_directories(/usr/local/cuda/targets/aarch64-linux/lib)
+#else()
+#    message("embed_platform off")
+#    include_directories(/usr/local/cuda/include)
+#    link_directories(/usr/local/cuda/lib64)
+#endif()
+
+
+
+# opencv
+# find_package(OpenCV)
+# include_directories(${OpenCV_INCLUDE_DIRS})
+
+# cuda
+include_directories(/usr/local/cuda/include)
+link_directories(/usr/local/cuda/lib64)
+# tensorrt
+include_directories(/usr/local/TensorRT/TensorRT-7.2.3.4/include)
+link_directories(/usr/local/TensorRT/TensorRT-7.2.3.4/lib /usr/local/TensorRT/TensorRT-7.2.3.4/lib/stubs)
+
 
 
 # LAYER PLUGIN LIB
