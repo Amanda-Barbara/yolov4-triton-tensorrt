@@ -22,4 +22,15 @@ TensorRT是第一款可编程推理加速器，能加速现有和未来的网络
 1. TensorRT构建的模型不是跨平台的，TensorRT构建的过程中依赖于软硬件的优化，在模型构建阶段，TensorRT会根据GPU的特性和输入数据的大小，选择最后的实现，因此在执行模型构建和模型推理的过程中最好都在一块显卡上操作
 2. 
 
+## 自定义插件流程
+1. 构建自定义插件库的序列化模型类
+   ```
+   class YoloLayerPlugin: public IPluginV2IOExt
+   ```
+2. 构建插件库反序列化模型类
+
+    ```
+    class YoloPluginCreator : public IPluginCreator
+    ```
+
 
