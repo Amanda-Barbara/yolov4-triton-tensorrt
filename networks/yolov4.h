@@ -6,14 +6,14 @@
 
 using namespace nvinfer1;
 
-#define USE_FP16
+//#define USE_FP16
 
 namespace yolov4 {
 
     // stuff we know about the network and the input/output blobs
     static const int INPUT_H = 608;
     static const int INPUT_W = 608;
-    static const int CLASS_NUM = 80;
+    static const int CLASS_NUM = 5;
 
     static const int YOLO_FACTOR_1 = 8;
     static const std::vector<float> YOLO_ANCHORS_1 = { 12,16, 19,36, 40,28 };
@@ -377,6 +377,8 @@ namespace yolov4 {
         config->setMaxWorkspaceSize(16 * (1 << 20));  // 16MB
     #ifdef USE_FP16
         config->setFlag(BuilderFlag::kFP16);
+    #else
+        config->setFlag(BuilderFlag::kTF32);
     #endif
         ICudaEngine* engine = builder->buildEngineWithConfig(*network, *config);
 
