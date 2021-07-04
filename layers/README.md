@@ -5,19 +5,21 @@ NVIDIA TensorRT是一种高性能神经网络推理(Inference)引擎，
 TensorRT是第一款可编程推理加速器，能加速现有和未来的网络架构。
 依赖cuda、cudnn，并对其进行了封装
 
+![](./docs/dl-cycle.png)
+
 ## 模型构建阶段
 1. 根据模型的结构使用TRT API复现该模型定义的网络
 2. 使用builder生成一个优化后的engine
 3. 将engine序列化到文件中，即生成一个plan格式的模型文件
 4. 读取序列化后的plan格式的模型文件，并对其进行前向推理(inference)操作
-
+![](./docs/tensorrt_worker.png)
 ## TensorRT的运行机制
 1. 定义网络
 2. 模型构建
 3. 执行前向推理(inference)
 
 ## TensorRT使用的注意事项
-1. TensorRT构建的模型不是跨平台的，TensorRT构建的过程中依赖于软硬件的优化
-
+1. TensorRT构建的模型不是跨平台的，TensorRT构建的过程中依赖于软硬件的优化，在模型构建阶段，TensorRT会根据GPU的特性和输入数据的大小，选择最后的实现，因此在执行模型构建和模型推理的过程中最好都在一块显卡上操作
+2. 
 
 
