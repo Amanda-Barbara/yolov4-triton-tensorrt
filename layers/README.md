@@ -32,5 +32,40 @@ TensorRT是第一款可编程推理加速器，能加速现有和未来的网络
     ```
     class YoloPluginCreator : public IPluginCreator
     ```
+![](./docs/custom_model_build_worker.png)
+
+3. 定义插件
+```
+namespace nvinfer1
+{
+
+//!
+//! \brief Register the plugin creator to the registry
+//! The static registry object will be instantiated when the plugin library is
+//! loaded. This static object will register all creators available in the
+//! library to the registry.
+//!
+template <typename T>
+class PluginRegistrar
+{
+public:
+    PluginRegistrar() { getPluginRegistry()->registerCreator(instance, ""); }
+private:
+    T instance{};
+};
+
+#define REGISTER_TENSORRT_PLUGIN(name) \
+    static nvinfer1::PluginRegistrar<name> pluginRegistrar##name {}
+
+} // namespace nvinfer1
+```
+   * 注册表类型为PluginRegistrar，可以通过REGISTER_TENSORRT_PLUGIN宏定义函数获取注册表的全局单例。
+REGISTER_TENSORRT_PLUGIN(YoloPluginCreator);
+ TensorRT是通过宏定义的方式注册各种插件，在编译阶段自动执行宏替换就注册了所有的插件. 每一个插件类型只允许注册一次。使用宏来控制插件的注册：
+ REGISTER_LAYER_CLASS宏可以实现将指定Layer注册到全局注册表中，首先定义一个工厂函数用来产生Layer对象，然后调用REGISTER_LAYER_CREATOR将工厂函数和Layer的类型名进行注册，支持两种Layer的数据类型，float和double。两个变量一个对应float，一个对应double，这两个变量的初始化，也就是它们的构造函数实际上完成Layer的注册动作。REGISTER_LAYER_CLASS实际上是为每一个Layer创建一个creator函数.
+
+4. 参数说明
+   * PluginFieldCollection:定义各种参数
+   * 
 
 
