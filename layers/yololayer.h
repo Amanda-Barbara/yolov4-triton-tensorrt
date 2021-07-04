@@ -43,7 +43,7 @@ namespace nvinfer1
 
             ~YoloLayerPlugin() override = default;
 
-            int getNbOutputs() const override
+            int getNbOutputs() const override // 如果派生类在虚函数声明时使用了override描述符，那么该函数必须重载其基类中的同名函数，否则代码将无法通过编译
             {
                 return 1;
             }
